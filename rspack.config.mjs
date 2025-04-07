@@ -41,16 +41,48 @@ export default env => {
         filename: 'RepackHostApp.container.js.bundle',
         dts: false,
         remotes: {
-          ChildApp: `ChildApp@http://localhost:9000/${platform}/ChildApp.container.js.bundle`,
+          // ChildApp: `ChildApp@http://localhost:9000/${platform}/ChildApp.container.js.bundle`,
         },
-        shared: Object.fromEntries(
-          Object.entries(pkg.dependencies).map(([dep, {version}]) => {
-            return [
-              dep,
-              {singleton: true, eager: true, requiredVersion: version},
-            ];
-          }),
-        ),
+        shared: {
+          react: {
+            singleton: true,
+            requiredVersion: '19.0.0',
+            eager: true,
+          },
+          'react-native': {
+            singleton: true,
+            requiredVersion: '0.78.2',
+            eager: true,
+          },
+          '@react-navigation/native': {
+            singleton: true,
+            requiredVersion: '^7.1.5',
+            eager: true,
+          },
+          '@react-navigation/native-stack': {
+            singleton: true,
+            requiredVersion: '^7.3.9',
+            eager: true,
+          },
+          'react-native-safe-area-context': {
+            singleton: true,
+            requiredVersion: '^5.3.0',
+            eager: true,
+          },
+          'react-native-screens': {
+            singleton: true,
+            requiredVersion: '^4.10.0',
+            eager: true,
+          },
+        }
+        // shared: Object.fromEntries(
+        //   Object.entries(pkg.dependencies).map(([dep, version]) => {
+        //     return [
+        //       dep,
+        //       {singleton: true, eager: true, requiredVersion: version},
+        //     ];
+        //   }),
+        // ),
       }),
       // Supports for new architecture - Hermes can also use JS, it's not a requirement,
       // it will still work the same but it's for performance optimization

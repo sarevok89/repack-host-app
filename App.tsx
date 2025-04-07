@@ -1,25 +1,14 @@
-import React, {Suspense} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import React from 'react';
+import {NavigationContainer} from '@react-navigation/native';
+import RootStack from './src/features/navigation/RootStack';
 
-const ChildApp = React.lazy(() => import('ChildApp/App'));
 
 function App(): React.JSX.Element {
   return (
-    <View style={styles.container}>
-      <Text>Host app!</Text>
-      <Suspense fallback={<Text>Loading...</Text>}>
-        <ChildApp />
-      </Suspense>
-    </View>
+    <NavigationContainer>
+      <RootStack />
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
 
 export default App;
