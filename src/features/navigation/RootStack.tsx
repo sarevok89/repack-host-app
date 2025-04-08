@@ -4,14 +4,14 @@ import React, {Suspense} from 'react';
 import { Text } from 'react-native';
 
 const Stack = createNativeStackNavigator();
-// const ChildApp = React.lazy(() => import('ChildApp/App'));
+const ChildApp = React.lazy(() => import('ChildApp/App'));
 
 const RootStack = () => {
   return (
     <Suspense fallback={<Text>Loading</Text>}>
       <Stack.Navigator>
         <Stack.Screen name="Home" component={HomeScreen} />
-        {/* <Stack.Screen name="ChildApp" component={ChildApp} /> */}
+        <Stack.Screen name="ChildApp" component={ChildApp} />
       </Stack.Navigator>
     </Suspense>
   );

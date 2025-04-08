@@ -1,6 +1,7 @@
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import * as Repack from '@callstack/repack';
+import rspack from '@rspack/core';
 import fs from 'fs';
 const pkg = JSON.parse(fs.readFileSync('./package.json', 'utf-8'));
 
@@ -23,9 +24,10 @@ export default env => {
     resolve: {
       ...Repack.getResolveOptions(),
     },
-    // output: {
-    //   uniqueName: 'repack-host-app',
-    // },
+    output: {
+      path: path.resolve(__dirname, `build/generated/${platform}`),
+      uniqueName: 'RepackHostApp',
+    },
     module: {
       rules: [
         ...Repack.getJsTransformRules(),
@@ -42,47 +44,21 @@ export default env => {
         dts: false,
         remotes: {
           // ChildApp: `ChildApp@http://localhost:9000/${platform}/ChildApp.container.js.bundle`,
+          ChildApp: `ChildApp@http://localhost:9000/mf-manifest.json`,
         },
-        shared: {
-          react: {
-            singleton: true,
-            requiredVersion: '19.0.0',
-            eager: true,
-          },
-          'react-native': {
-            singleton: true,
-            requiredVersion: '0.78.2',
-            eager: true,
-          },
-          '@react-navigation/native': {
-            singleton: true,
-            requiredVersion: '^7.1.5',
-            eager: true,
-          },
-          '@react-navigation/native-stack': {
-            singleton: true,
-            requiredVersion: '^7.3.9',
-            eager: true,
-          },
-          'react-native-safe-area-context': {
-            singleton: true,
-            requiredVersion: '^5.3.0',
-            eager: true,
-          },
-          'react-native-screens': {
-            singleton: true,
-            requiredVersion: '^4.10.0',
-            eager: true,
-          },
-        }
-        // shared: Object.fromEntries(
-        //   Object.entries(pkg.dependencies).map(([dep, version]) => {
-        //     return [
-        //       dep,
-        //       {singleton: true, eager: true, requiredVersion: version},
-        //     ];
-        //   }),
-        // ),
+        shared: Object.fromEntries(
+          Object.entries(pkg.dependencies).map(([dep, version]) => {
+            return [
+              dep,
+              {
+                singleton: true,
+                eager: true,
+                requiredVersion: version,
+                version: version.replace('^', ''),
+              },
+            ];
+          }),
+        ),
       }),
       // Supports for new architecture - Hermes can also use JS, it's not a requirement,
       // it will still work the same but it's for performance optimization
@@ -91,6 +67,11 @@ export default env => {
         test: /\.(js)?bundle$/,
         exclude: /index.bundle$/,
       }),
+      // silence missing @react-native-masked-view optionally required by @react-navigation/elements
+      new rspack.IgnorePlugin({
+        resourceRegExp: /^@react-native-masked-view/,
+      }),
     ],
+    ignoreWarnings: [/Critical dependency: require function is used in a way in which dependencies cannot be statically extracted/]
   };
 };
