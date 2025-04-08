@@ -44,7 +44,7 @@ export default env => {
         dts: false,
         remotes: {
           // ChildApp: `ChildApp@http://localhost:9000/${platform}/ChildApp.container.js.bundle`,
-          ChildApp: `ChildApp@http://localhost:9000/mf-manifest.json`,
+          ChildApp: `ChildApp@http://localhost:9000/generated/${platform}/mf-manifest.json`,
         },
         shared: Object.fromEntries(
           Object.entries(pkg.dependencies).map(([dep, version]) => {
