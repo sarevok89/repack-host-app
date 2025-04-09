@@ -1,10 +1,11 @@
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {HomeScreen} from '../home/screens';
-import React, {Suspense} from 'react';
-import { Text } from 'react-native';
+import React, { Suspense } from 'react'
+import { Text } from 'react-native'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
-const Stack = createNativeStackNavigator();
-const ChildApp = React.lazy(() => import('ChildApp/App'));
+import { HomeScreen } from '../home/screens'
+
+const Stack = createNativeStackNavigator()
+const ChildApp = React.lazy(() => import('ChildApp/App'))
 
 const RootStack = () => {
   return (
@@ -14,7 +15,7 @@ const RootStack = () => {
         <Stack.Screen name="ChildApp" component={ChildApp} />
       </Stack.Navigator>
     </Suspense>
-  );
-};
+  )
+}
 
-export default RootStack;
+export default RootStack

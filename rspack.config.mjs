@@ -1,12 +1,12 @@
-import path from 'node:path';
-import {fileURLToPath} from 'node:url';
-import * as Repack from '@callstack/repack';
-import rspack from '@rspack/core';
-import fs from 'fs';
-const pkg = JSON.parse(fs.readFileSync('./package.json', 'utf-8'));
+import path from 'node:path'
+import {fileURLToPath} from 'node:url'
+import * as Repack from '@callstack/repack'
+import rspack from '@rspack/core'
+import fs from 'fs'
+const pkg = JSON.parse(fs.readFileSync('./package.json', 'utf-8'))
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 /**
  * Rspack configuration enhanced with Re.Pack defaults for React Native.
@@ -16,7 +16,7 @@ const __dirname = path.dirname(__filename);
  */
 
 export default env => {
-  const {platform, mode} = env;
+  const {platform, mode} = env
 
   return {
     context: __dirname,
@@ -43,8 +43,8 @@ export default env => {
         filename: 'RepackHostApp.container.js.bundle',
         dts: false,
         remotes: {
-          // ChildApp: `ChildApp@http://localhost:9000/${platform}/ChildApp.container.js.bundle`,
-          ChildApp: `ChildApp@http://localhost:9000/generated/${platform}/mf-manifest.json`,
+          ChildApp: `ChildApp@http://localhost:9000/${platform}/ChildApp.container.js.bundle`,
+          // ChildApp: `ChildApp@http://localhost:9000/generated/${platform}/mf-manifest.json`,
         },
         shared: Object.fromEntries(
           Object.entries(pkg.dependencies).map(([dep, version]) => {
@@ -56,7 +56,7 @@ export default env => {
                 requiredVersion: version,
                 version: version.replace('^', ''),
               },
-            ];
+            ]
           }),
         ),
       }),
@@ -72,6 +72,8 @@ export default env => {
         resourceRegExp: /^@react-native-masked-view/,
       }),
     ],
-    ignoreWarnings: [/Critical dependency: require function is used in a way in which dependencies cannot be statically extracted/]
-  };
-};
+    ignoreWarnings: [
+      /Critical dependency: require function is used in a way in which dependencies cannot be statically extracted/,
+    ],
+  }
+}

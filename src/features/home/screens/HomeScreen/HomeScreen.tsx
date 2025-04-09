@@ -1,9 +1,9 @@
-import {useNavigation} from '@react-navigation/native';
-import React from 'react';
-import {View, StyleSheet, Text, Button} from 'react-native';
+import React from 'react'
+import { Button, StyleSheet, Text, View } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
 
 export const HomeScreen = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation()
 
   return (
     <View style={styles.container}>
@@ -13,8 +13,8 @@ export const HomeScreen = () => {
         onPress={() => navigation.navigate('ChildApp')}
       />
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -22,4 +22,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-});
+})
