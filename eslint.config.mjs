@@ -42,7 +42,7 @@ export default [
       'simple-import-sort/imports': [
         'error',
         {
-          groups: [['^react', '^react-native', '^@?\\w'], ['^[./]']],
+          groups: [['./gesture-handler', '^react', '^react-native', '^@?\\w'], ['^[./]']],
         },
       ],
     },
